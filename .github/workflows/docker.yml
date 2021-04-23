@@ -1,0 +1,24 @@
+name: Docker
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Docker
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: wongnai/workspace-ldap
+          tag_with_ref: true
